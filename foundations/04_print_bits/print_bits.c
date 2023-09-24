@@ -1,11 +1,12 @@
-#include <unistd.h>
 #include <stdio.h>
+#include <unistd.h>
 
-void print_bits(unsigned char octet)
+void	print_bits(unsigned char octet)
 {
-	int	i = 8;
-	unsigned char 	bit;
+	int				i;
+	unsigned char	bit;
 
+	i = 8;
 	while (i--)
 	{
 		bit = (octet >> i & 1) + '0';
@@ -13,12 +14,12 @@ void print_bits(unsigned char octet)
 	}
 }
 
-
-void reverse_bit(unsigned char octet)
+void	reverse_bit(unsigned char octet)
 {
-	int	i = 0;
-	unsigned char 	bit;
+	int				i;
+	unsigned char	bit;
 
+	i = 0;
 	while (i++ < 8)
 	{
 		bit = (octet << i & 1) + '0';
@@ -26,7 +27,7 @@ void reverse_bit(unsigned char octet)
 	}
 }
 
-int main(void)
+int	main(void)
 {
 	print_bits(2);
 	// write(1, "\n", 1);
