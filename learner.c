@@ -3,61 +3,31 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	ft_list_foreach(t_list *begin_list, void (*f)(void *))
+int iter(char *s1, char c, int i)
 {
-	t_list	*list_ptr;
+	int n = 0;
 
-	list_ptr = begin_list;
-	while (list_ptr)
+	while (s1[n] && (n < i || i == -1))
+		if (s1[n++] == c)
+			return (1);
+	return (0);		
+	
+}
+
+
+int main(int argc, char **argv)
+{
+	int i = 0;
+	if (argc == 3)
 	{
-		(*f)(list_ptr->data);
-		list_ptr = list_ptr->next;
-	}
-}
-
-t_list	*create_list(void *value)
-{
-	t_list	*ptr;
-
-	ptr = malloc(sizeof(t_list));
-	if (!ptr)
-		return (NULL);
-	ptr->next = NULL;
-	ptr->data = value;
-	return (ptr);
-}
-
-void	add_to_tail(t_list *ptr, t_list *new)
-{
-	new->next = ptr;
-	ptr = new;
-}
-
-int	main(int argc, char **argv)
-{
-	t_list	*ptr;
-	t_list	*tmp;
-	int		i;
-
-	(void)argc;
-	(void)argv;
-	int num[4] = {1, 2, 3, 4};
-	i = 0;
-	if (argc == 2)
-	{
-		while (i < 4)
+		while (argv[1][i])
 		{
-			printf("debug\n");
-			add_to_tail(ptr, create_list(&num[i]));
+			if (!iter(argv[1], argv[1][i], i) && iter(argv[2], argv[1][i], -1))
+				write(1,&argv[1][i], 1);
 			i++;
 		}
-		tmp = ptr;
-		while (tmp)
-		{
-			printf("%p\n", tmp->data);
-			tmp = tmp->next;
-		}
 	}
-	write(1, "\n", 1);
-	return (0);
+	
+	// ft_split("ddf6vewg64fz", "gtwthgdwthdwfteewhrtag6h4ffdhsd");
+    return 0;
 }

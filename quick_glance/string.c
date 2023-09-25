@@ -1,6 +1,4 @@
-#include <unistd.h>
-
-int main(int argc, char const *argv[])
+int expand_str(int argc, char const *argv[])
 {
     int i;
     int flag;

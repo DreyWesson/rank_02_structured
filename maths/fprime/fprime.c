@@ -11,7 +11,10 @@ int	main(int argc, char *argv[])
 		i = 1;
 		number = atoi(argv[1]);
 		if (number == 1)
+		{
 			printf("1");
+			return (1);
+		}
 		while (number >= ++i)
 		{
 			if (number % i == 0)

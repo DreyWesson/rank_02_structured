@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_prime_sum.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: doduwole <doduwole@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 10:52:31 by doduwole          #+#    #+#             */
-/*   Updated: 2023/05/07 11:02:53 by doduwole         ###   ########.fr       */
+/*   Updated: 2023/09/24 20:00:25 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	atoi(char *str)
 		return (-nbr);
 	return (nbr);
 }
+
 int is_prime(int num)
 {
 	int i = 1;
