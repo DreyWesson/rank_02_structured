@@ -7,11 +7,9 @@ void	print_bits(unsigned char octet)
 	int				i;
 	unsigned char	bit;
 
-	i = 8; // bcos int is 8 bits
+	i = 8; 
 	while (i--)
 	{
-		// '0' to convert number to char printable by write,
-		// >> to move thru each bit of octet
 		bit = (octet >> i & 1) + '0';
 		write(1, &bit, 1);
 	}
@@ -19,7 +17,6 @@ void	print_bits(unsigned char octet)
 
 unsigned char	swap_bits(unsigned char octet)
 {
-	// sample swap in halfs try outer forms
 	return ((octet >> 4) | (octet << 4));
 }
 

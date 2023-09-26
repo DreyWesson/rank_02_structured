@@ -48,7 +48,7 @@ void ft_prime(int num)
         return ;
     }
     i = 2;
-    while (num >= i)
+    while (i <= num)
     {
         if (num % i == 0)
         {
@@ -60,7 +60,6 @@ void ft_prime(int num)
         }
         i++;
     }
-    
 }
 
 int is_power_2(int num)
@@ -74,27 +73,27 @@ int is_power_2(int num)
 
 unsigned int lcm(unsigned int a, unsigned int b)
 {
-    unsigned int n;
+    unsigned int i;
 
     if (a == 0 || b == 0)
         return (0);
-    n = (a > b) ? a : b;
+    i = (a > b) ? a : b;
     while (1)
     {
-        if (n % a == 0 && n % b == 0)
-            return (n);
-        n++;
+        if (i % a == 0 && i % b == 0)
+            return (i);
+        i++;
     }
 }
 
-int		pgcd(int tab, int len)
+int		pgcd(int a, int b)
 {
 	int i;
 
-	i = tab < len ? tab : len;
+	i = a < b ? a : b;
 	while (i)
 	{
-		if (tab % i == 0 && len % i == 0)
+		if (a % i == 0 && b % i == 0)
 			return (i);
 		i--;
 	}
@@ -109,7 +108,6 @@ int     *ft_range(int start, int end)
 
 	range = (end - start);
 	range = (range < 0) ? (range * -1) : range;
-	printf("%d\n", range);
 	ptr = (int *)malloc((sizeof(int) * range) + 1);
 	i = 0;
 	if (start > end)

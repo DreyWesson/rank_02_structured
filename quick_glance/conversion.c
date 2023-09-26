@@ -1,57 +1,6 @@
 #include <unistd.h>
 
-// **** PRINT HEX *****
-void	print_hex(int x)
-{
-	char	*ptr;
 
-	ptr = "0123456789abcdef";
-	if (x >= 16)
-		print_hex(x / 16);
-	write(1, &ptr[x % 16], 1);
-}
-// **** PRINT HEX END *****
-
-// **** ATOI BASE *****
-// char	to_lower(char c)
-// {
-// 	if (c >= 'A' && c <= 'Z')
-// 		c += 32;
-// 	return (c);
-// }
-
-// int	base(char c, int base)
-// {
-// 	char	*ptr;
-// 	int		i;
-
-// 	ptr = "0123456789abcdef";
-// 	i = 0;
-// 	while (i < base)
-// 	{
-// 		if (c == ptr[i])
-// 			return (i);
-// 		i++;
-// 	}
-// 	return (-1);
-// }
-
-// int	atoi_base(const char *str, int str_base)
-// {
-// 	signed int	res;
-// 	int			i;
-// 	int			val;
-
-// 	i = 0;
-// 	res = 0;
-// 	val = 0;
-// 	while ((val = base(to_lower(str[i++]), str_base)) != -1)
-// 	{
-// 		res *= str_base;
-// 		res += val;
-// 	}
-// 	return (res);
-// }
 
 int	base(int c, int base)
 {
@@ -81,6 +30,16 @@ int	atoi_base(char *str, int str_base)
 	while ((res = base(str[i++], str_base)) != -1)
 		nbr = (nbr * str_base) + res;
 	return (nbr);
+}
+
+void	print_hex(int x)
+{
+	char	*ptr;
+
+	ptr = "0123456789abcdef";
+	if (x >= 16)
+		print_hex(x / 16);
+	write(1, &ptr[x % 16], 1);
 }
 
 void	ft_putnbr(int nb)
