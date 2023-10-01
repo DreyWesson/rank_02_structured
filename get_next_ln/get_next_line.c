@@ -6,7 +6,7 @@
 /*   By: doduwole <doduwole@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 07:59:31 by doduwole          #+#    #+#             */
-/*   Updated: 2023/10/01 21:30:41 by doduwole         ###   ########.fr       */
+/*   Updated: 2023/10/01 21:42:01 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,24 +73,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	if (size > 0)
-	{
-		while (src[i] && i < (size - 1))
-		{
-			dest[i] = src[i];
-			i++;
-		}
-		dest[i] = '\0';
-	}
-	while (src[i] != '\0')
-		i++;
-	return (i);
-}
 
 char	*ft_strchr(const char *s, int i)
 {
@@ -121,12 +103,10 @@ char	*ft_split(char	**str)
 	ft_free(str);
 	str[0] = ft_strdup(excess_chars);
 	ft_free(&excess_chars);
+	if (!ft_strchr(line, '\n') && !ft_strlen(line))
+		ft_free(&line);
 	if (!ft_strchr(line, '\n'))
-	{
-		if (!ft_strlen(line))
-			ft_free(&line);
 		ft_free(str);
-	}
 	return (line);
 }
 
@@ -156,7 +136,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 }
 
 
-
 void	ft_concat_chunks(char	**line, char	**chunk)
 {
 	char	*tmp;
@@ -172,11 +151,22 @@ void	ft_concat_chunks(char	**line, char	**chunk)
 	}
 }
 
-	 // allocate memory for the buffer size
-	 // we need to know the num of char read bcos sometimes chunk may read char beyond \n or even not for example EOF
-	 // while u still have char to read continue reading
-	 // null terminate every chunk
-	 // concat remaining char after newline with the new chunk in the buffer
+// structure
+// ****** libft *******
+	// => ft_strjoin, 
+	// => ft_strlen,
+	// => ft_free,
+	// => ft_substr,
+	// => ft_strchr,
+	// => ft_strdup,
+	// => ft_split
+// ****** GNL *******
+	// allocate memory for the buffer size
+	// we need to know the num of char read bcos sometimes chunk may 
+	//  read char beyond \n or even not for example EOF
+	// while u still have char to read continue reading
+	// null terminate every chunk
+	// concat remaining char after newline with the new chunk in the buffer
 	//  use strchr to check if u have \n in the line
 char	*get_next_line(int fd)
 {
@@ -201,45 +191,28 @@ char	*get_next_line(int fd)
 	return (ft_free(&chunk), ft_split(&line));
 }
 
-// structure
-// ****** libft *******
-// => ft_strjoin, 
-// => ft_strlen,
-// => ft_free,
-// => ft_substr,
-// => ft_strchr,
-// => ft_strdup,
-// => ft_strlcpy,
-// => ft_split
-// ****** GNL *******
 
 
 
-int main()
+
+int	main(void)
 {
-    char buf[3][10] = {"text1", "text2", "test3"};
-    int fd;
-    int i;
-    int j = -1;
-    char *line;
-    // while (++j < 3)
-    // {
-        i = -1;
-        fd = open(buf[0], O_RDONLY);
-		if (fd < 0)
-		{
-			printf("bad read\n");
-			// break;
-		}
-		
-        while (++i < 3)
-        {
-            line = get_next_line(fd);
-            printf("%s", line);
-            free(line);
-        }
-    //     printf("\n");
-    //     close(fd);
-    // }
-    return (0);
+	int		fd;
+	int		i;
+	int		j;
+	char	*line;
+
+	i = -1;
+	j = -1;
+	fd = open("text1", O_RDONLY);
+	if (fd < 0)
+		printf("bad read\n");
+
+	while (++i < 3)
+	{
+		line = get_next_line(fd);
+		printf("%s", line);
+		free(line);
+	}
+	return (0);
 }
