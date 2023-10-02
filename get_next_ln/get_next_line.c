@@ -3,21 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: doduwole <doduwole@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 07:59:31 by doduwole          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/10/01 21:42:01 by doduwole         ###   ########.fr       */
+=======
+/*   Updated: 2023/10/02 13:14:57 by doduwole         ###   ########.fr       */
+>>>>>>> refs/remotes/origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./get_next_line.h"
+// #include "./get_next_line.h"
 
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <fcntl.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+// ***** UTILS ******
 void	ft_free(char	**str)
 {
-	if (str[0])
+	int i = 0;
+	while (str[i])
 	{
-		free(str[0]);
-		str[0] = NULL;
+		free(str[i]);
+		str[i] = NULL;
 	}
 }
 
@@ -31,6 +46,20 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
+char	*ft_strchr(const char *s, int i)
+{
+	while (*s)
+	{
+		if (*s == i)
+			return ((char *)s);
+		s++;
+	}
+	if (i == '\0')
+		return ((char *)s);
+	return (0);
+}
+
+// ***** HELPER ******
 char	*ft_strdup(const char *s)
 {
 	int		i;
@@ -73,6 +102,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
+<<<<<<< HEAD
 
 char	*ft_strchr(const char *s, int i)
 {
@@ -110,6 +140,9 @@ char	*ft_split(char	**str)
 	return (line);
 }
 
+=======
+// ***** MAIN ******
+>>>>>>> refs/remotes/origin/main
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		i;
@@ -135,12 +168,34 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
+char	*ft_split(char	**str)
+{
+	char	*line;
+	char	*excess_chars;
+	int		i;
+
+	i = 0;
+	if (!str[0])
+		return (NULL);
+	while (str[0][i] != '\n' && str[0][i] != '\0')
+		i++;
+	line = ft_substr(str[0], 0, i + 1);
+	excess_chars = ft_substr(str[0], i + 1, ft_strlen(str[0]));
+	ft_free(str);
+	str[0] = ft_strdup(excess_chars);
+	ft_free(&excess_chars);
+	if (!ft_strchr(line, '\n') && !ft_strlen(line))
+		ft_free(&line);
+	if (!ft_strchr(line, '\n'))
+		ft_free(str);
+	return (line);
+}
+
 
 void	ft_concat_chunks(char	**line, char	**chunk)
 {
 	char	*tmp;
 
-	// if nothing has been read into line, then duplicate it chunks into line
 	if (!(*line)) 
 		*line = ft_strjoin("", *chunk);
 	else
@@ -151,23 +206,13 @@ void	ft_concat_chunks(char	**line, char	**chunk)
 	}
 }
 
-// structure
-// ****** libft *******
-	// => ft_strjoin, 
-	// => ft_strlen,
-	// => ft_free,
-	// => ft_substr,
-	// => ft_strchr,
-	// => ft_strdup,
-	// => ft_split
-// ****** GNL *******
-	// allocate memory for the buffer size
-	// we need to know the num of char read bcos sometimes chunk may 
-	//  read char beyond \n or even not for example EOF
-	// while u still have char to read continue reading
-	// null terminate every chunk
-	// concat remaining char after newline with the new chunk in the buffer
-	//  use strchr to check if u have \n in the line
+// allocate memory for the buffer size
+// we need to know the num of char read bcos sometimes chunk may read 
+// 	char beyond \n or even not for example EOF
+// while u still have char to read continue reading
+// null terminate every chunk
+// concat remaining char after newline with the new chunk in the buffer
+//  use strchr to check if u have \n in the line
 char	*get_next_line(int fd)
 {
 	static char	*line;
@@ -191,6 +236,7 @@ char	*get_next_line(int fd)
 	return (ft_free(&chunk), ft_split(&line));
 }
 
+<<<<<<< HEAD
 
 
 
@@ -208,11 +254,29 @@ int	main(void)
 	if (fd < 0)
 		printf("bad read\n");
 
+=======
+int main()
+{
+    int fd;
+    int i;
+    int j;
+    char *line;
+	
+	j = -1;
+	i = -1;
+	fd = open("text1", O_RDONLY);
+	if (fd < 0)
+		printf("bad read\n");
+>>>>>>> refs/remotes/origin/main
 	while (++i < 3)
 	{
 		line = get_next_line(fd);
 		printf("%s", line);
 		free(line);
 	}
+<<<<<<< HEAD
 	return (0);
+=======
+    return (0);
+>>>>>>> refs/remotes/origin/main
 }
