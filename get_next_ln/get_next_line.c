@@ -236,25 +236,6 @@ char	*get_next_line(int fd)
 	return (ft_free(&chunk), ft_split(&line));
 }
 
-<<<<<<< HEAD
-
-
-
-
-int	main(void)
-{
-	int		fd;
-	int		i;
-	int		j;
-	char	*line;
-
-	i = -1;
-	j = -1;
-	fd = open("text1", O_RDONLY);
-	if (fd < 0)
-		printf("bad read\n");
-
-=======
 int main()
 {
     int fd;
@@ -267,16 +248,11 @@ int main()
 	fd = open("text1", O_RDONLY);
 	if (fd < 0)
 		printf("bad read\n");
->>>>>>> refs/remotes/origin/main
 	while (++i < 3)
 	{
 		line = get_next_line(fd);
 		printf("%s", line);
 		free(line);
 	}
-<<<<<<< HEAD
-	return (0);
-=======
     return (0);
->>>>>>> refs/remotes/origin/main
 }
