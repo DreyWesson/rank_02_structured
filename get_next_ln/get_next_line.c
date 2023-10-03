@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: doduwole <doduwole@student.42.fr>          +#+  +:+       +#+        */
+/*   By: doduwole <doduwole@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 07:59:31 by doduwole          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/10/01 21:42:01 by doduwole         ###   ########.fr       */
-=======
-/*   Updated: 2023/10/02 13:14:57 by doduwole         ###   ########.fr       */
->>>>>>> refs/remotes/origin/main
+/*   Updated: 2023/10/02 15:48:08 by doduwole         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,47 +98,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-<<<<<<< HEAD
-
-char	*ft_strchr(const char *s, int i)
-{
-	while (*s)
-	{
-		if (*s == i)
-			return ((char *)s);
-		s++;
-	}
-	if (i == '\0')
-		return ((char *)s);
-	return (0);
-}
-
-char	*ft_split(char	**str)
-{
-	char	*line;
-	char	*excess_chars;
-	int		i;
-
-	i = 0;
-	if (!str[0])
-		return (NULL);
-	while (str[0][i] != '\n' && str[0][i] != '\0')
-		i++;
-	line = ft_substr(str[0], 0, i + 1);
-	excess_chars = ft_substr(str[0], i + 1, ft_strlen(str[0]));
-	ft_free(str);
-	str[0] = ft_strdup(excess_chars);
-	ft_free(&excess_chars);
-	if (!ft_strchr(line, '\n') && !ft_strlen(line))
-		ft_free(&line);
-	if (!ft_strchr(line, '\n'))
-		ft_free(str);
-	return (line);
-}
-
-=======
 // ***** MAIN ******
->>>>>>> refs/remotes/origin/main
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		i;
@@ -168,26 +124,26 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-char	*ft_split(char	**str)
+char	*ft_split(char	**buffer)
 {
 	char	*line;
 	char	*excess_chars;
 	int		i;
 
 	i = 0;
-	if (!str[0])
+	if (!buffer[0])
 		return (NULL);
-	while (str[0][i] != '\n' && str[0][i] != '\0')
+	while (buffer[0][i] != '\n' && buffer[0][i] != '\0')
 		i++;
-	line = ft_substr(str[0], 0, i + 1);
-	excess_chars = ft_substr(str[0], i + 1, ft_strlen(str[0]));
-	ft_free(str);
-	str[0] = ft_strdup(excess_chars);
+	line = ft_substr(*buffer, 0, i + 1);
+	excess_chars = ft_substr(*buffer, i + 1, ft_strlen(*buffer));
+	ft_free(buffer);
+	*buffer = ft_strdup(excess_chars);
 	ft_free(&excess_chars);
 	if (!ft_strchr(line, '\n') && !ft_strlen(line))
 		ft_free(&line);
 	if (!ft_strchr(line, '\n'))
-		ft_free(str);
+		ft_free(buffer);
 	return (line);
 }
 
@@ -206,32 +162,25 @@ void	ft_concat_chunks(char	**line, char	**chunk)
 	}
 }
 
-// allocate memory for the buffer size
-// we need to know the num of char read bcos sometimes chunk may read 
-// 	char beyond \n or even not for example EOF
-// while u still have char to read continue reading
-// null terminate every chunk
-// concat remaining char after newline with the new chunk in the buffer
-//  use strchr to check if u have \n in the line
 char	*get_next_line(int fd)
 {
 	static char	*line;
 	char		*chunk;
-	int			chunk_size;
+	int			size;
 
 	if (fd == -1 || BUFFER_SIZE < 1)
 		return (NULL);
 	chunk = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	chunk_size = read(fd, chunk, BUFFER_SIZE);
-	if (chunk_size == -1 || !chunk)
+	size = read(fd, chunk, BUFFER_SIZE);
+	if (size == -1 || !chunk)
 		ft_free(&chunk);
-	while (chunk_size > 0) 
+	while (size > 0) 
 	{
-		chunk[chunk_size] = '\0';
+		chunk[size] = '\0';
 		ft_concat_chunks(&line, &chunk); 
 		if (ft_strchr(line, '\n'))
 			break ;
-		chunk_size = read(fd, chunk, BUFFER_SIZE);
+		size = read(fd, chunk, BUFFER_SIZE);
 	}
 	return (ft_free(&chunk), ft_split(&line));
 }
@@ -240,19 +189,18 @@ int main()
 {
     int fd;
     int i;
-    int j;
     char *line;
-	
-	j = -1;
-	i = -1;
+
+	i = 0;
 	fd = open("text1", O_RDONLY);
 	if (fd < 0)
 		printf("bad read\n");
-	while (++i < 3)
+	while (i < 3)
 	{
 		line = get_next_line(fd);
 		printf("%s", line);
 		free(line);
+		i++;
 	}
     return (0);
 }
